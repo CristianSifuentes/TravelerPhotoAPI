@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(TravelerPhotoAPIContext))]
-    [Migration("20200209222549_1_1")]
-    partial class _1_1
+    [Migration("20200210010625_1_2")]
+    partial class _1_2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,11 +21,38 @@ namespace API.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("API.Models.Trips", b =>
+            modelBuilder.Entity("API.Models.Photos", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Actived");
+
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<string>("Description");
+
+                    b.Property<DateTime?>("ModificationDate");
+
+                    b.Property<string>("Name");
+
+                    b.Property<DateTime>("TakenDate");
+
+                    b.Property<string>("Title");
+
+                    b.Property<int>("TripsId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TripsId");
+
+                    b.ToTable("Photos");
+                });
+
+            modelBuilder.Entity("API.Models.Trips", b =>
+                {
+                    b.Property<int>("Id");
 
                     b.Property<bool>("Actived");
 
@@ -44,18 +71,14 @@ namespace API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Trips");
+                });
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Actived = false,
-                            CreationDate = new DateTime(2020, 2, 9, 16, 25, 48, 504, DateTimeKind.Local).AddTicks(6589),
-                            Description = "Seting",
-                            EndDate = new DateTime(2020, 2, 9, 16, 25, 48, 504, DateTimeKind.Local).AddTicks(6585),
-                            StartDate = new DateTime(2020, 2, 9, 16, 25, 48, 503, DateTimeKind.Local).AddTicks(297),
-                            Title = "Seting"
-                        });
+            modelBuilder.Entity("API.Models.Photos", b =>
+                {
+                    b.HasOne("API.Models.Trips", "Trips")
+                        .WithMany()
+                        .HasForeignKey("TripsId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

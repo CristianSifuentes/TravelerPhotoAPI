@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace API.Migrations
 {
-    public partial class _1_1 : Migration
+    public partial class _1_2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Trips",
+                name: "Photos",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -19,24 +19,31 @@ namespace API.Migrations
                     Actived = table.Column<bool>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    StartDate = table.Column<DateTime>(nullable: false),
-                    EndDate = table.Column<DateTime>(nullable: false)
+                    Name = table.Column<string>(nullable: true),
+                    TakenDate = table.Column<DateTime>(nullable: false),
+                    TripsId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Trips", x => x.Id);
+                    table.PrimaryKey("PK_Photos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Photos_Trips_TripsId",
+                        column: x => x.TripsId,
+                        principalTable: "Trips",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Trips",
-                columns: new[] { "Id", "Actived", "CreationDate", "Description", "EndDate", "ModificationDate", "StartDate", "Title" },
-                values: new object[] { 1, false, new DateTime(2020, 2, 9, 16, 25, 48, 504, DateTimeKind.Local).AddTicks(6589), "Seting", new DateTime(2020, 2, 9, 16, 25, 48, 504, DateTimeKind.Local).AddTicks(6585), null, new DateTime(2020, 2, 9, 16, 25, 48, 503, DateTimeKind.Local).AddTicks(297), "Seting" });
+            migrationBuilder.CreateIndex(
+                name: "IX_Photos_TripsId",
+                table: "Photos",
+                column: "TripsId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Trips");
+                name: "Photos");
         }
     }
 }
