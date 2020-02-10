@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace API.Migrations
@@ -11,7 +12,8 @@ namespace API.Migrations
                 name: "Trips",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
+                              Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CreationDate = table.Column<DateTime>(nullable: false),
                     ModificationDate = table.Column<DateTime>(nullable: true),
                     Actived = table.Column<bool>(nullable: false),

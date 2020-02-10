@@ -34,8 +34,7 @@ namespace API.Context
             //        Actived = false
             //    });
             builder.Entity<Trips>()
-                    .Property(p => p.Id)
-                    .ValueGeneratedNever();
+                    .Property(p => p.Id);
 
             base.OnModelCreating(builder);
         }

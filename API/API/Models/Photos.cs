@@ -20,7 +20,7 @@ namespace API.Models
         public string Description { get; set; }
         public string Name { get; set; }
         [DataType(DataType.DateTime)]
-        public DateTime TakenDate { get; private set; }
+        public DateTime TakenDate { get; set; }
 
         public int TripsId { get; set; }
         public virtual Trips Trips { get; set; }

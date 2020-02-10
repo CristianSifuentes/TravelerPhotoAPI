@@ -18,7 +18,7 @@ namespace API.Models
         public string Title { get; set; }
         public string Description { get; set; }
         [DataType(DataType.DateTime)]
-        public DateTime StartDate { get; private set; }
+        public DateTime StartDate { get; set; }
         [DataType(DataType.DateTime)]
         public DateTime EndDate { get; set; }
 

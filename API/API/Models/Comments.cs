@@ -18,7 +18,7 @@ namespace API.Models
         public string Title { get; set; }
         public string Description { get; set; }
         [DataType(DataType.DateTime)]
-        public DateTime CommentDate { get; private set; }
+        public DateTime CommentDate { get; set; }
 
         public int PhotosId { get; set; }
         public virtual Photos Photos { get; set; }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace API.Dto
 {
-    public class TripsDto
+    public class TripsDto: BaseEntityDto
     {
         public int Id { get; set; }
         [Required]
@@ -17,5 +17,7 @@ namespace API.Dto
         public DateTime StartDate { get; private set; }
         [Required]
         public DateTime EndDate { get; set; }
+
+
     }
 }

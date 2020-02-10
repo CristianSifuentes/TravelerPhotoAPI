@@ -1,11 +1,9 @@
 ﻿using API.Context;
 using API.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Services
 {
@@ -45,15 +43,26 @@ namespace API.Services
         }
 
 
-        //Trips
+        #region Trip
         public async Task<Trips[]> GetTrips()
         {
-            _logger.LogInformation($"Getting all comedians");
+            _logger.LogInformation($"Getting all trips");
             var query = _eventContext.Trips
                         .OrderBy(c => c.CreationDate);
 
             return await query.ToArrayAsync();
         }
+
+        public async Task<Trips> GetTrip(int tripId)
+        {
+            _logger.LogInformation($"Getting trip for id {tripId}");
+
+            var query = _eventContext.Trips
+                        .Where(c => c.Id == tripId);
+
+            return await query.FirstOrDefaultAsync();
+        }
+        #endregion
 
     }
 }
