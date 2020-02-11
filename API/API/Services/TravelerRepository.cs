@@ -64,5 +64,29 @@ namespace API.Services
         }
         #endregion
 
+
+
+
+
+        #region Photos
+        public async Task<Photos[]> GetPhotos()
+        {
+            _logger.LogInformation($"Getting all Photos");
+            var query = _eventContext.Photos
+                        .OrderBy(c => c.CreationDate);
+
+            return await query.ToArrayAsync();
+        }
+
+        public async Task<Photos> GetPhoto(int photoId)
+        {
+            _logger.LogInformation($"Getting Photos for id {photoId}");
+
+            var query = _eventContext.Photos
+                        .Where(c => c.Id == photoId);
+
+            return await query.FirstOrDefaultAsync();
+        }
+        #endregion
     }
 }

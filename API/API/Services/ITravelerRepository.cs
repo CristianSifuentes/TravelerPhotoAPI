@@ -16,5 +16,9 @@ namespace API.Services
 
         Task<Trips[]> GetTrips();
         Task<Trips> GetTrip(int tripId);
+
+
+        Task<Photos[]> GetPhotos();
+        Task<Photos> GetPhoto(int photoId);
     }
 }
