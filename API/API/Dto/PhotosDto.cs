@@ -22,8 +22,8 @@ namespace API.Dto
         public DateTime TakenDate { get; set; }
 
         public int TripsId { get; set; }
-        public virtual Trips Trips { get; set; }
+        public virtual TripsDto Trips { get; set; }
 
-        public virtual ICollection<Comments> Comments { get; set; }
+        public virtual ICollection<CommentsDto> Comments { get; set; }
     }
 }
