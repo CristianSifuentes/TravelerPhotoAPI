@@ -88,5 +88,28 @@ namespace API.Services
             return await query.FirstOrDefaultAsync();
         }
         #endregion
+
+
+
+        #region Photos
+        public async Task<Comments[]> GetComments()
+        {
+            _logger.LogInformation($"Getting all Comments");
+            var query = _eventContext.Comments
+                        .OrderBy(c => c.CreationDate);
+
+            return await query.ToArrayAsync();
+        }
+
+        public async Task<Comments> GetComment(int commentId)
+        {
+            _logger.LogInformation($"Getting Comments for id {commentId}");
+
+            var query = _eventContext.Comments
+                        .Where(c => c.Id == commentId);
+
+            return await query.FirstOrDefaultAsync();
+        }
+        #endregion
     }
 }
