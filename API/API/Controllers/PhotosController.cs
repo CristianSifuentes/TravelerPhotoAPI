@@ -48,7 +48,7 @@ namespace API.Controllers
         {
             try
             {
-                var result = await _eventRepository.GetTrip(photoId);
+                var result = await _eventRepository.GetPhoto(photoId);
 
                 if (result == null) return NotFound();
 
@@ -83,5 +83,50 @@ namespace API.Controllers
             return BadRequest();
         }
 
+
+        [HttpPut("{photoId}")]
+        public async Task<ActionResult<PhotosDto>> Put(int photoId, PhotosDto dto)
+        {
+            try
+            {
+                var oldPhoto = await _eventRepository.GetPhoto(photoId);
+                if (oldPhoto == null) return NotFound($"Could not find Photo with id {photoId}");
+
+                var newPhoto = _mapper.Map(dto, oldPhoto);
+                _eventRepository.Update(newPhoto);
+                if (await _eventRepository.Save())
+                {
+                    return NoContent();
+                }
+            }
+            catch (Exception)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+            }
+
+            return BadRequest();
+        }
+
+        [HttpDelete("{photoId}")]
+        public async Task<IActionResult> Delete(int photoId)
+        {
+            try
+            {
+                var oldPhoto = await _eventRepository.GetPhoto(photoId);
+                if (oldPhoto == null) return NotFound($"Could not find Photo with id {photoId}");
+
+                _eventRepository.Delete(oldPhoto);
+                if (await _eventRepository.Save())
+                {
+                    return NoContent();
+                }
+            }
+            catch (Exception)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+            }
+
+            return BadRequest();
+        }
     }
 }

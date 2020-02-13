@@ -82,5 +82,51 @@ namespace API.Controllers
             return BadRequest();
         }
 
+
+        [HttpPut("{commentId}")]
+        public async Task<ActionResult<CommentsDto>> Put(int commentId, CommentsDto dto)
+        {
+            try
+            {
+                var oldComment = await _eventRepository.GetComment(commentId);
+                if (oldComment == null) return NotFound($"Could not find Comment with id {commentId}");
+
+                var newComment = _mapper.Map(dto, oldComment);
+                _eventRepository.Update(newComment);
+                if (await _eventRepository.Save())
+                {
+                    return NoContent();
+                }
+            }
+            catch (Exception)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+            }
+
+            return BadRequest();
+        }
+
+        [HttpDelete("{commentId}")]
+        public async Task<IActionResult> Delete(int commentId)
+        {
+            try
+            {
+                var oldComment = await _eventRepository.GetComment(commentId);
+                if (oldComment == null) return NotFound($"Could not find Comment with id {commentId}");
+
+                _eventRepository.Delete(oldComment);
+                if (await _eventRepository.Save())
+                {
+                    return NoContent();
+                }
+            }
+            catch (Exception)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+            }
+
+            return BadRequest();
+        }
+
     }
 }
