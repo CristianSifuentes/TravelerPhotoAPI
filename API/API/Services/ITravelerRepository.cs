@@ -20,6 +20,7 @@ namespace API.Services
 
         Task<Photos[]> GetPhotos();
         Task<Photos> GetPhoto(int photoId);
+        Task<Photos[]> GetPhotosByTrip(int tripId);
 
         Task<Comments[]> GetComments();
         Task<Comments> GetComment(int comentId);

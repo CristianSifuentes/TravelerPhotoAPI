@@ -84,7 +84,6 @@ namespace API.Controllers
         }
 
 
-
         [HttpPut("{tripId}")]
         public async Task<ActionResult<TripsDto>> Put(int tripId, TripsDto dto)
         {

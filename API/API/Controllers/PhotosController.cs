@@ -61,6 +61,24 @@ namespace API.Controllers
             }
         }
 
+        [HttpGet("getPhotosByTrip")]
+        public async Task<ActionResult<PhotosDto[]>> GetPhotosByTrip(int tripId)
+        {
+            try
+            {
+                var results = await _eventRepository.GetPhotosByTrip(tripId);
+
+                if (!results.Any()) return NotFound();
+
+                var mappedEntities = _mapper.Map<PhotosDto[]>(results);
+                return Ok(mappedEntities);
+            }
+            catch (Exception)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+            }
+        }
+
         [HttpPost]
         public async Task<ActionResult<PhotosDto>> Post(PhotosDto dto)
         {
