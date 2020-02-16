@@ -87,11 +87,23 @@ namespace API.Services
 
             return await query.FirstOrDefaultAsync();
         }
+
+
+        public async Task<Photos[]> GetPhotosByTrip(int tripId)
+        {
+            _logger.LogInformation($"Getting all photos for trip id {tripId}");
+            IQueryable<Photos> query = _eventContext.Photos
+                                        .Where(c => c.Trips.Id == tripId)
+                                        .OrderBy(c => c.TakenDate);
+
+            return await query.ToArrayAsync();
+        }
+
         #endregion
 
 
 
-        #region Photos
+        #region Comments
         public async Task<Comments[]> GetComments()
         {
             _logger.LogInformation($"Getting all Comments");
